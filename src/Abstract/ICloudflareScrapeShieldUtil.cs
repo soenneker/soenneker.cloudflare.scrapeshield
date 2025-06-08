@@ -7,40 +7,40 @@ using Soenneker.Cloudflare.OpenApiClient.Models;
 namespace Soenneker.Cloudflare.ScrapeShield.Abstract;
 
 /// <summary>
-/// Utility for managing Cloudflare Scrape Shield settings
+/// Interface for managing Cloudflare Hotlink Protection settings
 /// </summary>
 public interface ICloudflareScrapeShieldUtil
 {
     /// <summary>
-    /// Gets the current Scrape Shield settings for a zone
+    /// Gets the current Hotlink Protection settings for a zone
     /// </summary>
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
-    /// <returns>The current Scrape Shield settings</returns>
-    ValueTask<Zone_settings_get_single_setting_Response_200_application_json> GetSettings(string zoneId, CancellationToken cancellationToken = default);
+    /// <returns>The current Hotlink Protection settings</returns>
+    ValueTask<Zone_settings_get_single_setting_Response_200_application_json> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Updates the Scrape Shield settings for a zone
+    /// Updates the Hotlink Protection settings for a zone
     /// </summary>
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="settings">The new settings to apply</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
-    /// <returns>The updated Scrape Shield settings</returns>
-    ValueTask<Zone_settings_edit_single_setting_Response_200_application_json> UpdateSettings(string zoneId, Zone_settings_get_single_setting_Response_200_application_json settings, CancellationToken cancellationToken = default);
+    /// <returns>The updated Hotlink Protection settings</returns>
+    ValueTask<Zone_settings_edit_single_setting_Response_200_application_json> UpdateHotlinkProtectionSettings(string zoneId, Zone_settings_get_single_setting_Response_200_application_json settings, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Enables Scrape Shield for a zone
+    /// Enables Hotlink Protection for a zone
     /// </summary>
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
-    /// <returns>The updated Scrape Shield settings</returns>
-    ValueTask<Zone_settings_edit_single_setting_Response_200_application_json> Enable(string zoneId, CancellationToken cancellationToken = default);
+    /// <returns>The updated Hotlink Protection settings</returns>
+    ValueTask<Zone_settings_edit_single_setting_Response_200_application_json> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Disables Scrape Shield for a zone
+    /// Disables Hotlink Protection for a zone
     /// </summary>
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
-    /// <returns>The updated Scrape Shield settings</returns>
-    ValueTask<Zone_settings_edit_single_setting_Response_200_application_json> Disable(string zoneId, CancellationToken cancellationToken = default);
+    /// <returns>The updated Hotlink Protection settings</returns>
+    ValueTask<Zone_settings_edit_single_setting_Response_200_application_json> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default);
 }
