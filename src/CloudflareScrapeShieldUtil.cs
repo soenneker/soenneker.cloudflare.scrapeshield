@@ -47,7 +47,10 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
             var request = new Zones_zone_settings_single_request
             {
-                Value = settings.Result?.Type == "on" ? "on" : "off"
+                AdditionalData = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "value", settings.Result?.Type == "on" ? "on" : "off"}
+                }
             };
             return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
         }
@@ -65,7 +68,10 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
             var request = new Zones_zone_settings_single_request
             {
-                Value = "on"
+                AdditionalData = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "value", "on"}
+                }
             };
             return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
         }
@@ -83,7 +89,10 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
             var request = new Zones_zone_settings_single_request
             {
-                Value = "off"
+                AdditionalData = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "value", "off"}
+                }
             };
             return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
         }
