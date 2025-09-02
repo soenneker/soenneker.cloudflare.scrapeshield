@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Soenneker.Cloudflare.OpenApiClient;
 using Soenneker.Cloudflare.OpenApiClient.Models;
-using Soenneker.Cloudflare.OpenApiClient.Zones.Item.Schema_validation.Settings;
 using Soenneker.Cloudflare.ScrapeShield.Abstract;
 using Soenneker.Cloudflare.Utils.Client.Abstract;
 using Soenneker.Extensions.Task;
@@ -19,7 +18,7 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
 {
     private readonly ICloudflareClientUtil _clientUtil;
     private readonly ILogger<CloudflareScrapeShieldUtil> _logger;
-    private const string HotlinkProtectionSettingId = "hotlink_protection";
+    private const string _hotlinkProtectionSettingId = "hotlink_protection";
 
     public CloudflareScrapeShieldUtil(ICloudflareClientUtil clientUtil, ILogger<CloudflareScrapeShieldUtil> logger)
     {
@@ -27,12 +26,12 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         _logger = logger;
     }
 
-    public async ValueTask<Zone_settings_get_single_setting_200> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default)
+    public async ValueTask<Zone_settings_get_single_setting_200?> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default)
     {
         try
         {
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
-            return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].GetAsync(cancellationToken: cancellationToken).NoSync();
+            return await client.Zones[zoneId].Settings[_hotlinkProtectionSettingId].GetAsync(cancellationToken: cancellationToken).NoSync();
         }
         catch (Exception ex)
         {
@@ -41,7 +40,7 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         }
     }
 
-    public async ValueTask<Zone_settings_edit_single_setting_200> UpdateHotlinkProtectionSettings(string zoneId, Zone_settings_get_single_setting_200 settings, CancellationToken cancellationToken = default)
+    public async ValueTask<Zone_settings_edit_single_setting_200?> UpdateHotlinkProtectionSettings(string zoneId, Zone_settings_get_single_setting_200 settings, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -52,11 +51,14 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
                 {
                     Value = new Zones_setting_value
                     {
-                        ZonesHotlinkProtectionValue = settings.Result?.ZonesHotlinkProtection?.Value == Zones_hotlink_protection_value.On ? Zones_hotlink_protection_value.On : Zones_hotlink_protection_value.Off
+                        ZonesHotlinkProtectionValueWrapper = new Zones_hotlink_protection_value_Wrapper
+                        {
+                            Value = settings.Result?.ZonesHotlinkProtection?.Value == Zones_hotlink_protection_value.On ? Zones_hotlink_protection_value.On : Zones_hotlink_protection_value.Off
+                        }
                     }
                 }
             };
-            return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
+            return await client.Zones[zoneId].Settings[_hotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
         }
         catch (Exception ex)
         {
@@ -65,7 +67,7 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         }
     }
 
-    public async ValueTask<Zone_settings_edit_single_setting_200> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
+    public async ValueTask<Zone_settings_edit_single_setting_200?> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -76,11 +78,14 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
                 {
                     Value = new Zones_setting_value
                     {
-                        ZonesHotlinkProtectionValue = Zones_hotlink_protection_value.On
+                        ZonesHotlinkProtectionValueWrapper = new Zones_hotlink_protection_value_Wrapper
+                        {
+                            Value = Zones_hotlink_protection_value.On
+                        }
                     }
                 }
             };
-            return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
+            return await client.Zones[zoneId].Settings[_hotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
         }
         catch (Exception ex)
         {
@@ -89,7 +94,7 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         }
     }
 
-    public async ValueTask<Zone_settings_edit_single_setting_200> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
+    public async ValueTask<Zone_settings_edit_single_setting_200?> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -100,11 +105,14 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
                 {
                     Value = new Zones_setting_value
                     {
-                        ZonesHotlinkProtectionValue = Zones_hotlink_protection_value.Off
+                        ZonesHotlinkProtectionValueWrapper = new Zones_hotlink_protection_value_Wrapper
+                        {
+                            Value = Zones_hotlink_protection_value.Off
+                        }
                     }
                 }
             };
-            return await client.Zones[zoneId].Settings[HotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
+            return await client.Zones[zoneId].Settings[_hotlinkProtectionSettingId].PatchAsync(request, cancellationToken: cancellationToken).NoSync();
         }
         catch (Exception ex)
         {
