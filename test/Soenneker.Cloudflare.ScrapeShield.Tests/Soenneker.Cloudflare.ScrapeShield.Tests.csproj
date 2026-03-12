@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.Cloudflare.ScrapeShield.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.Cloudflare.ScrapeShield\Soenneker.Cloudflare.ScrapeShield.csproj" />
     </ItemGroup>
 
     <ItemGroup>
