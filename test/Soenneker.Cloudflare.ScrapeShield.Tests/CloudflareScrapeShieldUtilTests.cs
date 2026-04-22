@@ -1,20 +1,19 @@
-﻿using Soenneker.Cloudflare.ScrapeShield.Abstract;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Cloudflare.ScrapeShield.Abstract;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Cloudflare.ScrapeShield.Tests;
 
-[Collection("Collection")]
-public sealed class CloudflareScrapeShieldUtilTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class CloudflareScrapeShieldUtilTests : HostedUnitTest
 {
     private readonly ICloudflareScrapeShieldUtil _util;
 
-    public CloudflareScrapeShieldUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public CloudflareScrapeShieldUtilTests(Host host) : base(host)
     {
         _util = Resolve<ICloudflareScrapeShieldUtil>(true);
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
