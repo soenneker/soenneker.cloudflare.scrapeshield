@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Soenneker.Cloudflare.OpenApiClient;
 using Soenneker.Cloudflare.OpenApiClient.Models;
 using Soenneker.Cloudflare.ScrapeShield.Abstract;
@@ -26,7 +26,7 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         _logger = logger;
     }
 
-    public async ValueTask<Zone_settings_get_single_setting_200?> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default)
+    public async ValueTask<ZoneSettingsGetSingleSetting200?> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -40,20 +40,20 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         }
     }
 
-    public async ValueTask<Zone_settings_edit_single_setting_200?> UpdateHotlinkProtectionSettings(string zoneId, Zone_settings_get_single_setting_200 settings, CancellationToken cancellationToken = default)
+    public async ValueTask<ZoneSettingsEditSingleSetting200?> UpdateHotlinkProtectionSettings(string zoneId, ZoneSettingsGetSingleSetting200 settings, CancellationToken cancellationToken = default)
     {
         try
         {
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
-            var request = new Zones_zone_settings_single_request
+            var request = new ZonesZoneSettingsSingleRequest
             {
-                ZonesZoneSettingsSingleRequestMember2 = new Zones_zone_settings_single_requestMember2
+                ZonesZoneSettingsSingleRequestMember2 = new ZonesZoneSettingsSingleRequestMember2
                 {
-                    Value = new Zones_setting_value
+                    Value = new ZonesSettingValue
                     {
-                        ZonesHotlinkProtectionValueWrapper = new Zones_hotlink_protection_value_Wrapper
+                        ZonesHotlinkProtectionValueWrapper = new ZonesHotlinkProtectionValue_Wrapper
                         {
-                            Value = settings.Result?.ZonesHotlinkProtection?.Value == Zones_hotlink_protection_value.On ? Zones_hotlink_protection_value.On : Zones_hotlink_protection_value.Off
+                            Value = settings.Result?.ZonesHotlinkProtection?.Value == ZonesHotlinkProtectionValue.On ? ZonesHotlinkProtectionValue.On : ZonesHotlinkProtectionValue.Off
                         }
                     }
                 }
@@ -67,20 +67,20 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         }
     }
 
-    public async ValueTask<Zone_settings_edit_single_setting_200?> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
+    public async ValueTask<ZoneSettingsEditSingleSetting200?> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
     {
         try
         {
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
-            var request = new Zones_zone_settings_single_request
+            var request = new ZonesZoneSettingsSingleRequest
             {
-                ZonesZoneSettingsSingleRequestMember2 = new Zones_zone_settings_single_requestMember2
+                ZonesZoneSettingsSingleRequestMember2 = new ZonesZoneSettingsSingleRequestMember2
                 {
-                    Value = new Zones_setting_value
+                    Value = new ZonesSettingValue
                     {
-                        ZonesHotlinkProtectionValueWrapper = new Zones_hotlink_protection_value_Wrapper
+                        ZonesHotlinkProtectionValueWrapper = new ZonesHotlinkProtectionValue_Wrapper
                         {
-                            Value = Zones_hotlink_protection_value.On
+                            Value = ZonesHotlinkProtectionValue.On
                         }
                     }
                 }
@@ -94,20 +94,20 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         }
     }
 
-    public async ValueTask<Zone_settings_edit_single_setting_200?> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
+    public async ValueTask<ZoneSettingsEditSingleSetting200?> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default)
     {
         try
         {
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
-            var request = new Zones_zone_settings_single_request
+            var request = new ZonesZoneSettingsSingleRequest
             {
-                ZonesZoneSettingsSingleRequestMember2 = new Zones_zone_settings_single_requestMember2
+                ZonesZoneSettingsSingleRequestMember2 = new ZonesZoneSettingsSingleRequestMember2
                 {
-                    Value = new Zones_setting_value
+                    Value = new ZonesSettingValue
                     {
-                        ZonesHotlinkProtectionValueWrapper = new Zones_hotlink_protection_value_Wrapper
+                        ZonesHotlinkProtectionValueWrapper = new ZonesHotlinkProtectionValue_Wrapper
                         {
-                            Value = Zones_hotlink_protection_value.Off
+                            Value = ZonesHotlinkProtectionValue.Off
                         }
                     }
                 }
