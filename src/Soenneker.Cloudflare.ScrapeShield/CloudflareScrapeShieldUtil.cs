@@ -11,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace Soenneker.Cloudflare.ScrapeShield;
 
-/// <summary>
-/// Implementation of <see cref="ICloudflareScrapeShieldUtil"/> for managing Cloudflare Hotlink Protection settings
-/// </summary>
 public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
 {
     private readonly ICloudflareClientUtil _clientUtil;
@@ -45,6 +42,9 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
         try
         {
             CloudflareOpenApiClient client = await _clientUtil.Get(cancellationToken).NoSync();
+            ZonesHotlinkProtectionValue value = settings.Result?.ZonesHotlinkProtection?.Value ??
+                                                   throw new InvalidOperationException("The supplied settings do not contain a Hotlink Protection value");
+
             var request = new ZonesZoneSettingsSingleRequest
             {
                 ZonesZoneSettingsSingleRequestMember2 = new ZonesZoneSettingsSingleRequestMember2
@@ -53,7 +53,7 @@ public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
                     {
                         ZonesHotlinkProtectionValueWrapper = new ZonesHotlinkProtectionValue_Wrapper
                         {
-                            Value = settings.Result?.ZonesHotlinkProtection?.Value == ZonesHotlinkProtectionValue.On ? ZonesHotlinkProtectionValue.On : ZonesHotlinkProtectionValue.Off
+                            Value = value
                         }
                     }
                 }
