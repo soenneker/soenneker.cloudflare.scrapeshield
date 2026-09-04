@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Soenneker.Cloudflare.ScrapeShield;
 
+/// <inheritdoc cref="ICloudflareScrapeShieldUtil" />
 public sealed class CloudflareScrapeShieldUtil : ICloudflareScrapeShieldUtil
 {
     private readonly ICloudflareClientUtil _clientUtil;
