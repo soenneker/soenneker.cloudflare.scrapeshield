@@ -17,7 +17,7 @@ public interface ICloudflareScrapeShieldUtil
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>The current Hotlink Protection settings</returns>
-    ValueTask<ZoneSettingsGetSingleSetting200?> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<ZoneSettingsGetSingleSetting200Response?> GetHotlinkProtectionSettings(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates the Hotlink Protection settings for a zone
@@ -26,7 +26,7 @@ public interface ICloudflareScrapeShieldUtil
     /// <param name="settings">The new settings to apply</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>The updated Hotlink Protection settings</returns>
-    ValueTask<ZoneSettingsEditSingleSetting200?> UpdateHotlinkProtectionSettings(string zoneId, ZoneSettingsGetSingleSetting200 settings, CancellationToken cancellationToken = default);
+    ValueTask<ZoneSettingsEditSingleSetting200Response?> UpdateHotlinkProtectionSettings(string zoneId, ZoneSettingsGetSingleSetting200Response settings, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables Hotlink Protection for a zone
@@ -34,7 +34,7 @@ public interface ICloudflareScrapeShieldUtil
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>The updated Hotlink Protection settings</returns>
-    ValueTask<ZoneSettingsEditSingleSetting200?> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<ZoneSettingsEditSingleSetting200Response?> EnableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables Hotlink Protection for a zone
@@ -42,5 +42,5 @@ public interface ICloudflareScrapeShieldUtil
     /// <param name="zoneId">The zone identifier</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>The updated Hotlink Protection settings</returns>
-    ValueTask<ZoneSettingsEditSingleSetting200?> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<ZoneSettingsEditSingleSetting200Response?> DisableHotlinkProtection(string zoneId, CancellationToken cancellationToken = default);
 }
